@@ -1,0 +1,143 @@
+<html>
+  <head>
+    <title>Guess Game ▲</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        font-family: "Raleway";
+      }
+      header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+      div.logo {
+        width: 180px;
+      }
+      div.abox {
+        width: 180px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        background: #bfd9ff;
+        border-radius: 10px 0 0 10px;
+      }
+      h2#count {
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      section {
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+      footer {
+        width: 100%;
+        background: #bfd9ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      footer div {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <h3>Guess Game ▲</h3>
+      </div>
+      <div onclick="customConfetti()" class="abox">
+        <h3>attempts</h3>
+        <h2 id="count">0</h2>
+      </div>
+    </header>
+
+    <section>
+      <div>
+        <h4>
+          Guess the Number Btw 1 to 100 <br />
+          in minimum attempts
+        </h4>
+      </div>
+      <div>
+        <h1 id="Number"></h1>
+        <div>
+          <h2 id="win">Input</h2>
+          <h3 id="Info">Your Guess..</h3>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div>
+        <p>Input &nbsp;</p>
+        <input
+          id="input"
+          onkeydown="if( event.key === 'Enter') guess()"
+          type="number"
+        />
+      </div>
+    </footer>
+  </body>
+  <script>
+    function customConfetti() {
+      var particle = {
+        particleCount: 300,
+      };
+      confetti(particle);
+    }
+  </script>
+  <script>
+    // Random number Btw 1 to 100
+    var guessMe = Math.floor(Math.random() * 100) + 1;
+    var attempt = 0;
+
+    function guess() {
+      var input = document.getElementById("input");
+      var number = document.getElementById("Number");
+      var x = input.value;
+      var info = document.getElementById("Info");
+      var count = document.getElementById("count");
+      var win = document.getElementById("win");
+
+      // Clearing Content
+      number.textContent = "";
+      info.textContent = "";
+      count.textContent = "";
+      win.textContent = "";
+
+      // Show the Content
+      number.textContent = x;
+      attempt++;
+      count.textContent = attempt;
+
+      // operaion
+      if (x > guessMe) {
+        info.textContent = "Too High...";
+      } else if (x < guessMe) {
+        info.textContent = "Too Low...";
+      } else {
+        win.textContent = "Congratulation! You guessed it!";
+        info.textContent = " in " + attempt + "th attempt ";
+        customConfetti();
+      }
+
+      input.value = "";
+    }
+  </script>
+</html>
